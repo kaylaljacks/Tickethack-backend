@@ -17,4 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+const cors = require('cors');
+app.use(cors());
+
 module.exports = app;
