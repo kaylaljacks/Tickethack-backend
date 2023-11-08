@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 
 const bookingSchema = mongoose.Schema({
     departure: String,
@@ -6,4 +7,6 @@ const bookingSchema = mongoose.Schema({
     price: Number,
    });
    
-   const Book = mongoose.model('bookings', bookingSchema);
+   const Booking = mongoose.model('bookings', bookingSchema);
+
+   module.exports = Booking;

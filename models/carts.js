@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 
 const cartSchema = mongoose.Schema({
     departure: String,
@@ -6,4 +7,6 @@ const cartSchema = mongoose.Schema({
     price: Number,
    });
    
-   const Book = mongoose.model('carts', cartSchema);
+   const Cart = mongoose.model('carts', cartSchema);
+
+   module.exports = Cart;

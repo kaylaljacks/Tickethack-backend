@@ -1,58 +1,47 @@
 var express = require('express');
 var router = express.Router();
-const carts = require('../models/cart');
-
+const Cart = require('../models/carts');
+require('../models/connection');
 
 /* GET home page. */
-router.get('/carts', function(req, res, next) {
-    const carts = new cart({
+router.post('/', (req, res) => {
+  const newCart = new Cart({
       departure: req.body.departure,
       arrival: req.body.arrival,
       date: req.body.date,
       price: req.body.price,
-   });
-    carts.save().then(
-      () => {
-        res.status(201).json({
-          message: 'Post saved successfully!'
-        });
-      }
-    ).catch(
-      (error) => {
-        res.status(400).json({
-          error: error
-        });
-      }
-    );
   });
 
-  
-  router.put('/carts', (req, res, next) => {
-    const carts = new cart({
-      departure: req.body.departure,
-      arrival: req.body.arrival,
-      date: req.body.date,
-      price: req.body.price,
-    });
+  newCart.save().then(() => {
+    Cart.find().then(data => {
+      res.json({ allCarts: data });
+    })
+  });
+});
+
+router.get('/', (req, res) => {
+  Cart.find().then(data => {
+    res.json({ allCarts: data });
   })
+});
+
+router.delete('/all', (req, res) => {
+  Cart.deleteMany().then(() => {
+    Cart.find().then(data => {
+      res.json({ allCarts: data });
+    })
+  });
+});
   
-  router.delete('/carts, (req, res, next) => {
-    Thing.deleteOne({_id: req.params.id}).then(
-      () => {
-        res.status(200).json({
-          message: 'Deleted!'
-        });
-      })
+router.delete('/:id', (req, res) => {
+  Cart.deleteOne({_id: req.params.id}).then(() => {
+    Cart.find().then(data => {
+      res.json({ allCarts: data });
+    })
+  });
+});
   
     
-    ).catch(
-      (error) => {
-        res.status(400).json({
-          error: error
-        });
-      }
-    );
-    })
 
   
 
